@@ -42,21 +42,21 @@ namespace SkillMService.Controllers
 
             List<Skill> jrskills = DBConnection.GraphClient().Cypher
                     .Match("(emp:Emp)-[r:Knows]->(s:Skill)")
-                    .Where("emp.id = {id} and r.value <= 35")
+                    .Where("emp.id = {id} and r.value = 1")
                     .WithParam("id", userID)
                     .Return(s => s.As<Skill>())
                     .Results.ToList<Skill>();
 
             List<Skill> intskills = DBConnection.GraphClient().Cypher
                     .Match("(emp:Emp)-[r:Knows]->(s:Skill)")
-                    .Where("emp.id = {id} and r.value > 35 and r.value <= 60")
+                    .Where("emp.id = {id} and r.value = 2 ")
                     .WithParam("id", userID)
                     .Return(s => s.As<Skill>())
                     .Results.ToList<Skill>();
 
             List<Skill> srskills = DBConnection.GraphClient().Cypher
                     .Match("(emp:Emp)-[r:Knows]->(s:Skill)")
-                    .Where("emp.id = {id} and r.value > 60 and r.value <= 90")
+                    .Where("emp.id = {id} and r.value = 3")
                     .WithParam("id", userID)
                     .Return(s => s.As<Skill>())
                     .Results.ToList<Skill>();
@@ -64,7 +64,7 @@ namespace SkillMService.Controllers
 
             List<Skill> ldskills = DBConnection.GraphClient().Cypher
                     .Match("(emp:Emp)-[r:Knows]->(s:Skill)")
-                    .Where("emp.id = {id} and r.value > 90 and r.value <=100")
+                    .Where("emp.id = {id} and r.value = 4")
                     .WithParam("id", userID)
                     .Return(s => s.As<Skill>())
                     .Results.ToList<Skill>();
