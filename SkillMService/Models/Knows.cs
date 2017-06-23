@@ -7,6 +7,10 @@ namespace SkillMService.Models
 {
     public class Knows
     {
+        public  Knows()
+        {
+
+        }
         public int id { get; set; }
         public int value { get; set; }
     }
