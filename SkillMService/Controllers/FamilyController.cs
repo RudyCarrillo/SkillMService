@@ -29,6 +29,7 @@ namespace SkillMService.Controllers
                 }
                 else
                 {
+                    string id = skillGroupName.Replace(" ", "-");
                     Family newSkillGroup = new Family(skillGroupName);
                     DBConnection.GraphClient().Cypher
                         .Merge("(sk:SkillGroup {name: {name}})")
@@ -39,6 +40,8 @@ namespace SkillMService.Controllers
                             name = newSkillGroup.name,
                             newSkillGroup
                         })
+                        .Set("sk.id = {id}")
+                        .WithParam("id", id)
                         .ExecuteWithoutResults();
                     result = "The skill has been created.";
                 }

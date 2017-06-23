@@ -12,6 +12,11 @@ namespace SkillMService.Models
             this.name = name;
         }
 
+
+        public Employee()
+        {
+            
+        }
         public string id { get; set; }
         public string name { get; set; }
         public int location { get; set; }

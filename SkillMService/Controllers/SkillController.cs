@@ -144,6 +144,7 @@ namespace SkillMService.Controllers
                 }
                 else
                 {
+                    string id = skillName.Replace(" ", "-");
                     Skill newSkill = new Skill(skillName);
                     DBConnection.GraphClient().Cypher
                         .Merge("(sk:Skill {name: {name}})")
@@ -154,6 +155,8 @@ namespace SkillMService.Controllers
                             name = newSkill.name,
                             newSkill
                         })
+                        .Set("sk.id = {id}")
+                        .WithParam("id", id)
                         .ExecuteWithoutResults();
                     result = "The skill has been created.";
                 }
@@ -254,13 +257,13 @@ namespace SkillMService.Controllers
             bool isRelated = false;
 
             var result =
-                graphClient.Cypher
+                DBConnection.GraphClient().Cypher
                 .Match("(sk:Skill)-[rel:IS_RELATED_TO]->(skgp:SkillGroup)")
                 .Where("sk.name = {skillName}")
                 .WithParam("skillName", skillName)
                 .AndWhere("skgp.name = {skillGroupName}")
                 .WithParam("skillGroupName", skillGroupName)
-                .Return(rel => rel.As<RelationshipInstance<object>>())
+                .Return(rel => rel.As<Neo4jClient.RelationshipInstance<object>>())
                 .Results;
 
             if (result.Count() != 0)
