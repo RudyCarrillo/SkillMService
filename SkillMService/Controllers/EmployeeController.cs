@@ -127,7 +127,7 @@ namespace SkillMService.Controllers
 
             var employee =
                 DBConnection.GraphClient().Cypher
-                .Match("(emp:EMP)")
+                .Match("(emp:Emp)")
                 .Where("emp.name = {employeeName}")
                 .WithParam("employeeName", employeeName)
                 .Return(emp => emp.As<Employee>().name)
@@ -157,7 +157,7 @@ namespace SkillMService.Controllers
                 string id = employeeName.Replace(" ", "-");
                 Employee newEmployee = new Employee(employeeName);
                 DBConnection.GraphClient().Cypher
-                    .Merge("(emp:EMP {name: {name}})")
+                    .Merge("(emp:Emp {name: {name}})")
                     .OnCreate()
                     .Set("emp = {newEmployee}")
                     .WithParams(new
