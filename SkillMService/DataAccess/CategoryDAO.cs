@@ -3,36 +3,26 @@ using SkillMService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Cors;
+using System.Web;
 
-namespace SkillMService.Controllers
+namespace SkillMService.DataAccess
 {
-    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
-    [RoutePrefix("api/Family")]
-    public class FamilyController : ApiController
+    public class CategoryDAO
     {
-
-
-        [System.Web.Http.AcceptVerbs("GET", "POST")]
-        [System.Web.Http.HttpGet]
-        [Route("createSkillGroup")]
-        public string createSkillGroup(string skillGroupName)
+        public static string createSkillCategory(string skillGroupName)
         {
             string result = "";
 
             if (skillGroupName != "")
             {
-                if (existsSkillGroup(skillGroupName))
+                if (existsSkillCategory(skillGroupName))
                 {
                     result = "The skill actually exists.";
                 }
                 else
                 {
                     string id = skillGroupName.Replace(" ", "-");
-                    Family newSkillGroup = new Family(skillGroupName);
+                    Category newSkillGroup = new Category(skillGroupName);
                     DBConnection.GraphClient().Cypher
                         .Merge("(sk:SkillGroup {name: {name}})")
                         .OnCreate()
@@ -55,9 +45,7 @@ namespace SkillMService.Controllers
             return result;
         }
 
-
-
-        public static bool existsSkillGroup(string skillGroupName)
+        public static bool existsSkillCategory(string skillGroupName)
         {
             bool exists = false;
 
@@ -66,7 +54,7 @@ namespace SkillMService.Controllers
                 .Match("(skgp:SkillGroup)")
                 .Where("skgp.name = {skillGroupName}")
                 .WithParam("skillGroupName", skillGroupName)
-                .Return(skgp => skgp.As<Family>().name)
+                .Return(skgp => skgp.As<Category>().name)
                 .Results.SingleOrDefault();
 
             if (skillGroup == null)
@@ -80,8 +68,6 @@ namespace SkillMService.Controllers
 
             return exists;
         }
-
-
 
     }
 }

@@ -8,11 +8,19 @@ namespace SkillMService.App_Start
 {
     public static class DBConnection
     {
-        static public GraphClient GraphClient()
+        static GraphClient graphClient;
+
+        public static GraphClient GraphClient()
         {
-            GraphClient graphClient;
-            graphClient = new GraphClient(new Uri("http://localhost:7474/db/data"), "", "");
-            graphClient.Connect();
+            if (graphClient == null)
+            {
+                graphClient = new GraphClient(new Uri("http://localhost:7474/db/data"), "", "");
+            }
+            if (!graphClient.IsConnected)
+            {
+                graphClient.Connect();
+            }
+
             return graphClient;
         }
     }

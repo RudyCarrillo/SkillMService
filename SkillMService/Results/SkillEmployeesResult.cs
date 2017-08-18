@@ -7,14 +7,12 @@ using SkillMService.Models;
 
 namespace SkillMService.Results
 {
-    public class SkillEmployeesResult
+    public class SkillEmployeesResult: Skill
     {
-        public string id { get; set; }
-        public string name { get; set; }
-
+      
         public List<Employee> JrEmployees { get; set; }
         public List<Employee> IntEmployees { get; set; }
-        public List<Employee> SrSEmployees { get; set; }
-        public List<Employee> LdSEmployees { get; set; }
+        public List<Employee> SrEmployees { get; set; }
+        public List<Employee> LdEmployees { get; set; }
     }
 }

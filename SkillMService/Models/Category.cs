@@ -5,21 +5,18 @@ using System.Web;
 
 namespace SkillMService.Models
 {
-    public class Employee
+    public class Category
     {
-        public Employee()
-        {
+        //public string id { get; set; }
 
+        public Category()
+        {
         }
 
-        public Employee(string name)
+        public Category(string name)
         {
             this.name = name;
         }
-
-        public string id { get; set; }
         public string name { get; set; }
-        public int location { get; set; }
-       
     }
 }

@@ -6,7 +6,7 @@ using SkillMService.Models;
 
 namespace SkillMService.Results
 {
-    public class EmployeeSkillResult
+    public class EmployeeSkillResult : Employee
     {
         public EmployeeSkillResult() { }
 
@@ -19,16 +19,15 @@ namespace SkillMService.Results
                                     List<Skill> ldskills
                                         )
         {
-            this.ID = id;
-            this.NAME = name;
+            this.id = id;
+            this.name = name;
+            this.location = location;
             this.JrSkills = jrskills;
             this.SrSkills = srskills;
             this.LdSkills = ldskills;
         }
 
-        public string ID { get; set; }
-        public string NAME { get; set; }
-        public int LOCATION { get; set; }
+       
         public List<Skill> JrSkills { get; set; }
         public List<Skill> IntSkills { get; set; }
         public List<Skill> SrSkills { get; set; }

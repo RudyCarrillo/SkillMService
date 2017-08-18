@@ -6,6 +6,7 @@ using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using System.Net.Http.Headers;
+using WebApiContrib.Formatting.Jsonp;
 
 namespace SkillMService
 {
@@ -15,6 +16,7 @@ namespace SkillMService
         {
             // Configuración y servicios de Web API
             // Configure Web API para usar solo la autenticación de token de portador.
+            //config.EnableCors();
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
@@ -22,7 +24,11 @@ namespace SkillMService
 
             config.MapHttpAttributeRoutes();
 
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+
+            //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+
+            config.Formatters.Insert(0, jsonpFormatter);
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
